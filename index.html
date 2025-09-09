@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mil Sabores - Dulces momentos desde 1975</title>
+    <link rel="stylesheet" href="./assets/style.css">
+    <!-- Fuentes Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- HEADER Y NAVEGACIÓN -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1 class="logo">Mil Sabores</h1>
+                    <span class="tagline">Dulces momentos desde 1975</span>
+                </div>
+                
+                <!-- Menú de navegación -->
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#home" class="nav-link active" data-section="home">Inicio</a></li>
+                    <li><a href="#productos" class="nav-link" data-section="productos">Productos</a></li>
+                    <li><a href="#registro" class="nav-link" data-section="registro">Registro</a></li>
+                    <li><a href="#login" class="nav-link" data-section="login">Login</a></li>
+                    <li><a href="#contacto" class="nav-link" data-section="contacto">Contacto</a></li>
+                    <li><a href="#blog" class="nav-link" data-section="blog">Blog</a></li>
+                </ul>
+                
+                <!-- Carrito y usuario -->
+                <div class="nav-actions">
+                    <div class="user-info" id="user-info" style="display: none;">
+                        <span id="user-name"></span>
+                        <button id="logout-btn" class="btn-logout">Cerrar Sesión</button>
+                    </div>
+                    <button class="cart-btn" id="cart-btn" data-section="carrito">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </button>
+                </div>
+                
+                <!-- Botón hamburguesa para móvil -->
+                <button class="nav-toggle" id="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        
+        <!-- SECCIÓN HOME / HERO -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <div class="hero-text">
+                            <h2 class="hero-title">Celebrando 50 años de tradición</h2>
+                            <p class="hero-subtitle">Desde 1975 endulzando la vida de las familias chilenas</p>
+                            <div class="hero-features">
+                                <div class="feature">
+                                    <i class="fas fa-trophy"></i>
+                                    <span>Récord Guinness 1995</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-heart"></i>
+                                    <span>50 años de experiencia</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-award"></i>
+                                    <span>Calidad artesanal</span>
+                                </div>
+                            </div>
+                            <button class="btn-primary hero-btn" data-section="productos">Ver Productos</button>
+                        </div>
+                        <div class="hero-image">
+                            <div class="anniversary-badge">
+                                <span class="anniversary-number">50</span>
+                                <span class="anniversary-text">Años</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Productos destacados -->
+            <div class="featured-products">
+                <div class="container">
+                    <h3 class="section-title">Productos Destacados</h3>
+                    <div class="products-grid" id="featured-products">
+                        <!-- Los productos destacados se cargarán dinámicamente -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Información de la empresa -->
+            <div class="company-info">
+                <div class="container">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h4>Nuestra Misión</h4>
+                            <p>Ofrecer una experiencia dulce y memorable a nuestros clientes, proporcionando productos de repostería de alta calidad para todas las ocasiones.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4>Nuestra Visión</h4>
+                            <p>Convertirnos en la tienda online líder de productos de repostería en Chile, conocida por nuestra innovación y calidad.</p>
+                        </div>
+                        <div class="info-card">
+                            <h4>Nuestra Historia</h4>
+                            <p>Desde 1975, hemos mantenido la tradición familiar en la repostería, incluso obteniendo un Récord Guinness en 1995.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN PRODUCTOS -->
+        <section id="productos" class="section">
+            <div class="container">
+                <h2 class="section-title">Nuestros Productos</h2>
+                
+                <!-- Filtros de categorías -->
+                <div class="filters">
+                    <button class="filter-btn active" data-category="all">Todos</button>
+                    <button class="filter-btn" data-category="Tortas Cuadradas">Tortas Cuadradas</button>
+                    <button class="filter-btn" data-category="Tortas Circulares">Tortas Circulares</button>
+                    <button class="filter-btn" data-category="Postres Individuales">Postres Individuales</button>
+                    <button class="filter-btn" data-category="Productos Sin Azúcar">Sin Azúcar</button>
+                    <button class="filter-btn" data-category="Pastelería Tradicional">Tradicional</button>
+                    <button class="filter-btn" data-category="Productos Sin Gluten">Sin Gluten</button>
+                    <button class="filter-btn" data-category="Productos Vegana">Vegana</button>
+                    <button class="filter-btn" data-category="Tortas Especiales">Especiales</button>
+                </div>
+                
+                <!-- Grid de productos -->
+                <div class="products-grid" id="products-grid">
+                    <!-- Los productos se cargarán dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN REGISTRO -->
+        <section id="registro" class="section">
+            <div class="container">
+                <div class="form-container">
+                    <h2 class="section-title">Registro de Usuario</h2>
+                    <p class="form-subtitle">Únete a nuestra familia Mil Sabores y disfruta de beneficios especiales</p>
+                    
+                    <form id="register-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="reg-nombre">Nombre Completo *</label>
+                            <input type="text" id="reg-nombre" name="nombre" required>
+                            <span class="error-message" id="error-nombre"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reg-email">Correo Electrónico *</label>
+                            <input type="email" id="reg-email" name="email" required>
+                            <span class="error-message" id="error-email"></span>
+                            <small class="form-help">Acepta @duoc.cl, @profesor.duoc.cl, @gmail.com</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reg-password">Contraseña *</label>
+                            <input type="password" id="reg-password" name="password" required>
+                            <span class="error-message" id="error-password"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reg-confirm-password">Confirmar Contraseña *</label>
+                            <input type="password" id="reg-confirm-password" name="confirmPassword" required>
+                            <span class="error-message" id="error-confirm-password"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reg-fecha-nacimiento">Fecha de Nacimiento *</label>
+                            <input type="date" id="reg-fecha-nacimiento" name="fechaNacimiento" required>
+                            <span class="error-message" id="error-fecha-nacimiento"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reg-codigo-descuento">Código de Descuento (Opcional)</label>
+                            <input type="text" id="reg-codigo-descuento" name="codigoDescuento" placeholder="FELICES50">
+                            <span class="success-message" id="success-codigo"></span>
+                        </div>
+                        
+                        <div class="form-benefits">
+                            <h4>Beneficios Especiales:</h4>
+                            <ul>
+                                <li><i class="fas fa-gift"></i> 50% descuento para mayores de 50 años</li>
+                                <li><i class="fas fa-percentage"></i> 10% descuento permanente con código "FELICES50"</li>
+                                <li><i class="fas fa-birthday-cake"></i> Torta gratis en cumpleaños para estudiantes Duoc</li>
+                            </ul>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary full-width">Registrarse</button>
+                    </form>
+                    
+                    <p class="form-footer">¿Ya tienes cuenta? <a href="#" data-section="login">Inicia sesión aquí</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN LOGIN -->
+        <section id="login" class="section">
+            <div class="container">
+                <div class="form-container">
+                    <h2 class="section-title">Iniciar Sesión</h2>
+                    <p class="form-subtitle">Accede a tu cuenta y disfruta de tus beneficios</p>
+                    
+                    <form id="login-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="login-email">Correo Electrónico</label>
+                            <input type="email" id="login-email" name="email" required>
+                            <span class="error-message" id="login-error-email"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="login-password">Contraseña</label>
+                            <input type="password" id="login-password" name="password" required>
+                            <span class="error-message" id="login-error-password"></span>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary full-width">Iniciar Sesión</button>
+                    </form>
+                    
+                    <div class="demo-users">
+                        <h4>Usuarios de Prueba:</h4>
+                        <div class="demo-user">
+                            <strong>Usuario Mayor:</strong> mayor@gmail.com / password123<br>
+                            <small>Recibe 50% descuento por edad</small>
+                        </div>
+                        <div class="demo-user">
+                            <strong>Estudiante Duoc:</strong> estudiante@duoc.cl / password123<br>
+                            <small>Torta gratis en cumpleaños</small>
+                        </div>
+                        <div class="demo-user">
+                            <strong>Usuario Regular:</strong> usuario@gmail.com / password123<br>
+                            <small>Descuentos aplicables con códigos</small>
+                        </div>
+                    </div>
+                    
+                    <p class="form-footer">¿No tienes cuenta? <a href="#" data-section="registro">Regístrate aquí</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN CARRITO -->
+        <section id="carrito" class="section">
+            <div class="container">
+                <h2 class="section-title">Carrito de Compras</h2>
+                
+                <div class="cart-container">
+                    <div class="cart-items" id="cart-items">
+                        <!-- Los items del carrito se cargarán dinámicamente -->
+                    </div>
+                    
+                    <div class="cart-summary">
+                        <div class="summary-card">
+                            <h3>Resumen del Pedido</h3>
+                            <div class="summary-line">
+                                <span>Subtotal:</span>
+                                <span id="cart-subtotal">$0</span>
+                            </div>
+                            <div class="summary-line">
+                                <span>Descuentos:</span>
+                                <span id="cart-discount" class="discount">-$0</span>
+                            </div>
+                            <div class="summary-line total">
+                                <span>Total:</span>
+                                <span id="cart-total">$0</span>
+                            </div>
+                            
+                            <div class="discount-info" id="discount-info">
+                                <!-- Información de descuentos aplicados -->
+                            </div>
+                            
+                            <button class="btn-primary full-width" id="checkout-btn">Proceder al Pago</button>
+                            <button class="btn-secondary full-width" data-section="productos">Seguir Comprando</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="empty-cart" id="empty-cart" style="display: none;">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Tu carrito está vacío</h3>
+                    <p>Agrega algunos productos deliciosos a tu carrito</p>
+                    <button class="btn-primary" data-section="productos">Ver Productos</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN CONTACTO -->
+        <section id="contacto" class="section">
+            <div class="container">
+                <h2 class="section-title">Contáctanos</h2>
+                
+                <div class="contact-container">
+                    <div class="contact-form">
+                        <h3>Envíanos un Mensaje</h3>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="contact-nombre">Nombre Completo *</label>
+                                <input type="text" id="contact-nombre" name="nombre" required>
+                                <span class="error-message" id="contact-error-nombre"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-email">Correo Electrónico *</label>
+                                <input type="email" id="contact-email" name="email" required>
+                                <span class="error-message" id="contact-error-email"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-asunto">Asunto *</label>
+                                <select id="contact-asunto" name="asunto" required>
+                                    <option value="">Selecciona un asunto</option>
+                                    <option value="consulta">Consulta General</option>
+                                    <option value="pedido">Consulta sobre Pedido</option>
+                                    <option value="sugerencia">Sugerencia</option>
+                                    <option value="reclamo">Reclamo</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                                <span class="error-message" id="contact-error-asunto"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-mensaje">Mensaje *</label>
+                                <textarea id="contact-mensaje" name="mensaje" rows="5" required></textarea>
+                                <span class="error-message" id="contact-error-mensaje"></span>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <h3>Información de Contacto</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Dirección</strong>
+                                <p>Av. Providencia 1234, Santiago, Chile</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Teléfono</strong>
+                                <p>+56 2 2345 6789</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email</strong>
+                                <p>contacto@milsabores.cl</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Horarios</strong>
+                                <p>Lun - Vie: 8:00 - 20:00<br>Sáb - Dom: 9:00 - 18:00</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq">
+                            <h4>Preguntas Frecuentes</h4>
+                            <div class="faq-item">
+                                <strong>¿Hacen entregas a domicilio?</strong>
+                                <p>Sí, realizamos entregas en toda la Región Metropolitana.</p>
+                            </div>
+                            <div class="faq-item">
+                                <strong>¿Con cuánta anticipación debo hacer mi pedido?</strong>
+                                <p>Para tortas especiales, recomendamos 48 horas de anticipación.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN BLOG -->
+        <section id="blog" class="section">
+            <div class="container">
+                <h2 class="section-title">Blog Mil Sabores</h2>
+                <p class="section-subtitle">Descubre tips, recetas y secretos de la repostería</p>
+                
+                <div class="blog-categories">
+                    <button class="category-btn active" data-blog-category="all">Todos</button>
+                    <button class="category-btn" data-blog-category="recetas">Recetas</button>
+                    <button class="category-btn" data-blog-category="tips">Tips</button>
+                    <button class="category-btn" data-blog-category="historia">Historia</button>
+                    <button class="category-btn" data-blog-category="eventos">Eventos</button>
+                </div>
+                
+                <div class="blog-grid" id="blog-grid">
+                    <!-- Los artículos del blog se cargarán dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Mil Sabores</h4>
+                    <p>Endulzando vidas desde 1975</p>
+                    <div class="social-links">
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Navegación</h4>
+                    <ul>
+                        <li><a href="#" data-section="home">Inicio</a></li>
+                        <li><a href="#" data-section="productos">Productos</a></li>
+                        <li><a href="#" data-section="contacto">Contacto</a></li>
+                        <li><a href="#" data-section="blog">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Información</h4>
+                    <ul>
+                        <li>Términos y Condiciones</li>
+                        <li>Política de Privacidad</li>
+                        <li>Política de Devoluciones</li>
+                        <li>Envíos y Entregas</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p><i class="fas fa-phone"></i> +56 2 2345 6789</p>
+                    <p><i class="fas fa-envelope"></i> contacto@milsabores.cl</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Santiago, Chile</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Pastelería Mil Sabores. Todos los derechos reservados.</p>
+                <p>Celebrando 50 años de tradición familiar</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL DE PRODUCTO -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-body" id="modal-body">
+                <!-- Contenido del producto se carga dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE NOTIFICACIÓN -->
+    <div class="notification" id="notification">
+        <span class="notification-message" id="notification-message"></span>
+        <button class="notification-close" id="notification-close">&times;</button>
+    </div>
+
+    <script src="./assets/app.js"></script>
+</body>
+</html>
