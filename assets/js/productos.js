@@ -7,49 +7,56 @@
 // CARGA Y VISUALIZACIÓN DE PRODUCTOS
 // ===============================
 
+// Carga y muestra los productos destacados en la página principal
 function cargarProductosDestacados() {
     const container = document.getElementById('featured-products');
     if (!container) return;
 
+    // Filtra los productos que tienen la propiedad destacado en true
     const productosDestacados = PRODUCTOS.filter(p => p.destacado);
-    container.innerHTML = productosDestacados.map(producto => 
+    container.innerHTML = productosDestacados.map(producto =>
         crearTarjetaProducto(producto)
     ).join('');
 }
 
+// Carga todos los productos, filtros y búsqueda en el catálogo
 function cargarProductos() {
     actualizarGridProductos();
     configurarFiltrosProductos();
     configurarBusquedaProductos();
 }
 
+// Actualiza y renderiza la grilla de productos según categoría y búsqueda
 function actualizarGridProductos() {
     const container = document.getElementById('products-grid');
     if (!container) return;
 
     let productos = PRODUCTOS;
 
+    // Aplica filtro de categoría si no es 'all'
     if (appState.categoriaActual !== 'all') {
         productos = productos.filter(p => p.categoria === appState.categoriaActual);
     }
 
-    // Filtrar por búsqueda de nombre
+    // Aplica filtro de término de búsqueda en nombre
     if (appState.busquedaActual && appState.busquedaActual.trim() !== '') {
         const termino = appState.busquedaActual.trim().toLowerCase();
-        productos = productos.filter(p => 
+        productos = productos.filter(p =>
             p.nombre.toLowerCase().includes(termino)
         );
     }
 
-    container.innerHTML = productos.map(producto => 
+    // Renderiza todas las tarjetas en el contenedor de grilla
+    container.innerHTML = productos.map(producto =>
         crearTarjetaProducto(producto)
     ).join('');
 }
 
 // ===============================
-// FUNCIÓN MEJORADA PARA CREAR TARJETA DE PRODUCTO
+// FUNCIÓN PARA CREAR TARJETA DE PRODUCTO
 // ===============================
 
+// Genera el HTML de cada producto en la grilla y destacado
 function crearTarjetaProducto(producto) {
     return `
         <div class="product-card" data-code="${producto.codigo}">
@@ -86,6 +93,7 @@ function crearTarjetaProducto(producto) {
 // MANEJO DE ERRORES DE IMÁGENES
 // ===============================
 
+// Oculta imagen rota y muestra ícono de producto alternativo si falla la carga
 function manejarErrorImagen(img) {
     img.style.display = 'none';
     const fallback = img.parentNode.querySelector('.product-fallback');
@@ -98,29 +106,32 @@ function manejarErrorImagen(img) {
 // CONFIGURACIÓN DE FILTROS Y BÚSQUEDA
 // ===============================
 
+// Configura el campo de búsqueda y su listener
 function configurarBusquedaProductos() {
     const searchInput = document.getElementById('product-search');
     if (!searchInput) return;
 
-    // Reset campo y estado
+    // Inicializa el campo de búsqueda con el valor actual del estado
     searchInput.value = appState.busquedaActual;
 
+    // Cada vez que se escribe, actualiza la búsqueda y la grilla
     searchInput.addEventListener('input', (e) => {
         appState.busquedaActual = e.target.value.toLowerCase();
         actualizarGridProductos();
     });
 }
 
+// Configura los botones de filtro de categoría y su comportamiento
 function configurarFiltrosProductos() {
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
 
-            // Actualizar botón activo
+            // Quita el estado activo a todos los botones y lo agrega al actual
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            // Aplicar filtro
+            // Actualiza el estado y la grilla según la categoría elegida
             appState.categoriaActual = btn.getAttribute('data-category');
             actualizarGridProductos();
         });
@@ -131,10 +142,12 @@ function configurarFiltrosProductos() {
 // MODAL DE DETALLE DEL PRODUCTO
 // ===============================
 
+// Muestra el detalle completo de un producto en un modal
 function verProducto(codigo) {
     const producto = PRODUCTOS.find(p => p.codigo === codigo);
     if (!producto) return;
 
+    // Estructura HTML del modal con toda la info del producto
     const modalContent = `
         <div class="product-detail">
             <div class="product-detail-image">
@@ -173,21 +186,25 @@ function verProducto(codigo) {
 // UTILIDADES DE PRODUCTOS
 // ===============================
 
+// Busca y retorna el producto por su código
 function buscarProducto(codigo) {
     return PRODUCTOS.find(p => p.codigo === codigo);
 }
 
+// Devuelve todos los productos de una categoría dada
 function obtenerProductosPorCategoria(categoria) {
     return PRODUCTOS.filter(p => p.categoria === categoria);
 }
 
+// Devuelve todos los productos destacados
 function obtenerProductosDestacados() {
     return PRODUCTOS.filter(p => p.destacado);
 }
 
+// Busca productos por nombre o descripción que incluyan el término
 function buscarProductosPorNombre(termino) {
     const terminoLower = termino.toLowerCase();
-    return PRODUCTOS.filter(p => 
+    return PRODUCTOS.filter(p =>
         p.nombre.toLowerCase().includes(terminoLower) ||
         p.descripcion.toLowerCase().includes(terminoLower)
     );

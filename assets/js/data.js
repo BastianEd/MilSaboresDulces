@@ -3,6 +3,8 @@
  * Contiene todas las constantes y datos estáticos
  */
 
+// Lista de productos disponibles en la pastelería
+// Cada producto tiene: código, nombre, categoría, precio, descripción, imagen y si es destacado
 const PRODUCTOS = [
     {
         codigo: "TC001",
@@ -11,7 +13,7 @@ const PRODUCTOS = [
         precio: 45000,
         descripcion: "Deliciosa torta de chocolate con capas de ganache y un toque de avellanas. Personalizable con mensajes especiales.",
         imagen: "./assets/img/TortaCuadradaDeChocolate.webp",
-        destacado: true
+        destacado: true // Se usa para resaltar en la tienda
     },
     {
         codigo: "TC002",
@@ -138,9 +140,10 @@ const PRODUCTOS = [
     }
 ];
 
+// Categorías disponibles de los productos (se usa para filtros o menús)
 const CATEGORIAS = [
     "Tortas Cuadradas",
-    "Tortas Circulares", 
+    "Tortas Circulares",
     "Postres Individuales",
     "Productos Sin Azúcar",
     "Pastelería Tradicional",
@@ -149,6 +152,7 @@ const CATEGORIAS = [
     "Tortas Especiales"
 ];
 
+// Información de la empresa (usada en páginas de "nosotros" o pie de página)
 const EMPRESA = {
     nombre: "Pastelería Mil Sabores",
     eslogan: "Dulces momentos desde 1975",
@@ -157,15 +161,16 @@ const EMPRESA = {
     vision: "Convertirnos en la tienda online líder de productos de repostería en Chile, conocida por nuestra innovación, calidad y el impacto positivo en la comunidad, especialmente en la formación de nuevos talentos en gastronomía."
 };
 
+// Blog de la página (secciones de artículos con tips, recetas e historia)
 const BLOG_ARTICULOS = [
     {
         id: 1,
         titulo: "Historia de la Repostería Chilena",
-        categoria: "historia",
+        categoria: "historia", // Categoría del artículo
         contenido: "Descubre cómo ha evolucionado la repostería en Chile desde sus orígenes hasta nuestros días. Un viaje por las tradiciones dulces que han marcado nuestra cultura gastronómica.",
         fecha: "2024-01-15",
         autor: "Chef Patricia Morales",
-        imagen: "📚"
+        imagen: "📚" // Se usa como emoji/ícono representativo
     },
     {
         id: 2,
@@ -214,26 +219,27 @@ const BLOG_ARTICULOS = [
     }
 ];
 
+// Usuarios de demostración (para pruebas de login o perfiles en la aplicación)
 const USUARIOS_DEMO = [
     {
         email: "mayor@gmail.com",
-        password: "password123",
+        password: "password123", // Contraseña ficticia de ejemplo
         nombre: "Elena Rodríguez",
         fechaNacimiento: "1960-05-15",
-        tipoUsuario: "mayor"
+        tipoUsuario: "mayor" // Segmento de usuario (ej: descuentos especiales)
     },
     {
         email: "estudiante@duoc.cl",
         password: "password123",
         nombre: "Diego Muñoz",
         fechaNacimiento: "2002-08-22",
-        tipoUsuario: "estudiante_duoc"
+        tipoUsuario: "estudiante_duoc" // Segmento de estudiantes DUOC
     },
     {
         email: "usuario@gmail.com",
         password: "password123",
         nombre: "Carmen Jiménez",
         fechaNacimiento: "1990-12-10",
-        tipoUsuario: "regular"
+        tipoUsuario: "regular" // Usuario normal
     }
 ];

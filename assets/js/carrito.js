@@ -7,6 +7,7 @@
 // GESTIÓN DEL CARRITO
 // ===============================
 
+// Agrega un producto al carrito por su código
 function agregarAlCarrito(codigo) {
     const producto = buscarProducto(codigo);
     if (!producto) {
@@ -14,11 +15,14 @@ function agregarAlCarrito(codigo) {
         return;
     }
 
+    // Busca si el producto ya está en el carrito
     const itemExistente = appState.carrito.find(item => item.codigo === codigo);
-    
+
     if (itemExistente) {
+        // Si ya existe, aumenta la cantidad
         itemExistente.cantidad++;
     } else {
+        // Si no existe, agrega como nuevo con cantidad 1
         appState.carrito.push({
             codigo: producto.codigo,
             nombre: producto.nombre,
@@ -28,11 +32,13 @@ function agregarAlCarrito(codigo) {
         });
     }
 
+    // Actualiza contador, guarda estado y muestra notificación
     actualizarContadorCarrito();
     guardarEstado();
     mostrarNotificacion(`${producto.nombre} agregado al carrito`);
 }
 
+// Elimina un producto del carrito usando su código
 function eliminarDelCarrito(codigo) {
     appState.carrito = appState.carrito.filter(item => item.codigo !== codigo);
     actualizarContadorCarrito();
@@ -41,12 +47,15 @@ function eliminarDelCarrito(codigo) {
     mostrarNotificacion('Producto eliminado del carrito');
 }
 
+// Cambia la cantidad de un producto en el carrito
 function cambiarCantidad(codigo, nuevaCantidad) {
+    // Si la cantidad es menor o igual a cero, elimina el producto
     if (nuevaCantidad <= 0) {
         eliminarDelCarrito(codigo);
         return;
     }
 
+    // Modifica la cantidad si existe ese producto en el carrito
     const item = appState.carrito.find(item => item.codigo === codigo);
     if (item) {
         item.cantidad = nuevaCantidad;
@@ -56,6 +65,7 @@ function cambiarCantidad(codigo, nuevaCantidad) {
     }
 }
 
+// Vacía completamente el carrito
 function vaciarCarrito() {
     appState.carrito = [];
     actualizarContadorCarrito();
@@ -68,10 +78,12 @@ function vaciarCarrito() {
 // CÁLCULOS DEL CARRITO
 // ===============================
 
+// Calcula el subtotal sumando el precio por cantidad de cada ítem
 function calcularSubtotal() {
     return appState.carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0);
 }
 
+// Calcula el descuento posible según usuario y reglas
 function calcularDescuento() {
     const subtotal = calcularSubtotal();
     let descuento = 0;
@@ -79,18 +91,18 @@ function calcularDescuento() {
 
     if (appState.usuarioActual) {
         const usuario = appState.usuarioActual;
-        
-        // Descuento por edad (mayores de 60)
+
+        // Descuento especial para mayores de 60 años (o tipo usuario mayor)
         if (usuario.tipoUsuario === 'mayor' || calcularEdad(usuario.fechaNacimiento) >= 60) {
             descuento = subtotal * appState.descuentos.mayor50;
             tipoDescuento = 'Descuento Adulto Mayor (50%)';
         }
-        // Torta gratis en cumpleaños para estudiantes Duoc
+        // Torta gratis para estudiantes Duoc en su cumpleaños
         else if (usuario.tipoUsuario === 'estudiante_duoc' && esCumpleanos(usuario.fechaNacimiento)) {
             const tortaMasCara = Math.max(...appState.carrito
                 .filter(item => buscarProducto(item.codigo).categoria.includes('Torta'))
                 .map(item => item.precio));
-            
+
             if (tortaMasCara > 0) {
                 descuento = tortaMasCara;
                 tipoDescuento = 'Torta Gratis Cumpleaños Duoc';
@@ -101,6 +113,7 @@ function calcularDescuento() {
     return { descuento, tipoDescuento };
 }
 
+// Calcula el total restando el descuento al subtotal
 function calcularTotal() {
     const subtotal = calcularSubtotal();
     const { descuento } = calcularDescuento();
@@ -111,6 +124,7 @@ function calcularTotal() {
 // INTERFAZ DEL CARRITO
 // ===============================
 
+// Actualiza el contador visual del carrito
 function actualizarContadorCarrito() {
     const contador = document.querySelector('.cart-count');
     if (contador) {
@@ -120,21 +134,23 @@ function actualizarContadorCarrito() {
     }
 }
 
+// Renderiza la vista completa del carrito y el resumen
 function actualizarVistaCarrito() {
     const container = document.getElementById('cart-items');
     const resumen = document.getElementById('cart-summary');
-    
+
     if (!container || !resumen) return;
 
+    // Si el carrito está vacío, muestra el mensaje correspondiente
     if (appState.carrito.length === 0) {
         mostrarCarritoVacio(container, resumen);
         return;
     }
 
-    // Renderizar items del carrito
+    // Muestra cada producto en el carrito
     container.innerHTML = appState.carrito.map(item => crearItemCarrito(item)).join('');
 
-    // Renderizar resumen
+    // Muestra el resumen con subtotal, descuentos y total
     const subtotal = calcularSubtotal();
     const { descuento, tipoDescuento } = calcularDescuento();
     const total = calcularTotal();
@@ -142,6 +158,7 @@ function actualizarVistaCarrito() {
     resumen.innerHTML = crearResumenCarrito(subtotal, descuento, tipoDescuento, total);
 }
 
+// Genera el HTML de un producto en el carrito
 function crearItemCarrito(item) {
     return `
         <div class="cart-item">
@@ -173,6 +190,7 @@ function crearItemCarrito(item) {
     `;
 }
 
+// Genera el resumen de compra (subtotal, descuentos, total, acciones)
 function crearResumenCarrito(subtotal, descuento, tipoDescuento, total) {
     return `
         <div class="summary-card">
@@ -213,6 +231,7 @@ function crearResumenCarrito(subtotal, descuento, tipoDescuento, total) {
     `;
 }
 
+// Muestra el estado vacío del carrito
 function mostrarCarritoVacio(container, resumen) {
     container.innerHTML = `
         <div class="empty-cart">
@@ -231,6 +250,7 @@ function mostrarCarritoVacio(container, resumen) {
 // PROCESAMIENTO DEL PEDIDO
 // ===============================
 
+// Procesa el pedido y muestra notificaciones de resultado
 function procesarPedido() {
     if (appState.carrito.length === 0) {
         mostrarNotificacion('El carrito está vacío', 'error');
@@ -239,10 +259,10 @@ function procesarPedido() {
 
     const total = calcularTotal();
     const { tipoDescuento } = calcularDescuento();
-    
-    // Simular procesamiento
+
+    // Simula el procesamiento y muestra un mensaje
     mostrarNotificacion('Procesando pedido...', 'warning');
-    
+
     setTimeout(() => {
         let mensaje = `¡Pedido procesado exitosamente! Total: ${formatearPrecio(total)}`;
         if (tipoDescuento) {
@@ -250,14 +270,14 @@ function procesarPedido() {
         }
 
         mostrarNotificacion(mensaje);
-        
-        // Limpiar carrito
+
+        // Vacía el carrito después de procesar
         appState.carrito = [];
         actualizarContadorCarrito();
         actualizarVistaCarrito();
         guardarEstado();
 
-        // Redirigir a home después de unos segundos
+        // Redirige a la página principal tras unos segundos
         setTimeout(() => {
             navegarA('home');
         }, 2000);

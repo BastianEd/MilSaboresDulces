@@ -9,10 +9,11 @@
 
 function configurarFormularioLogin() {
     const form = document.getElementById('login-form');
-    if (!form) return;
+    if (!form) return; // Si no existe el formulario, no hace nada
 
+    // Captura el evento submit y llama al login
     form.addEventListener('submit', (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Evita el refresh
         procesarLogin();
     });
 }
@@ -21,6 +22,7 @@ function configurarFormularioRegistro() {
     const form = document.getElementById('registro-form');
     if (!form) return;
 
+    // Captura el evento submit y llama al registro
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         procesarRegistro();
@@ -35,20 +37,23 @@ function procesarLogin() {
     const email = document.getElementById('login-email')?.value;
     const password = document.getElementById('login-password')?.value;
 
+    // Validación de campos vacíos
     if (!email || !password) {
         mostrarNotificacion('Por favor completa todos los campos', 'error');
         return;
     }
 
-    const usuario = appState.usuariosRegistrados.find(u => 
+    // Buscar usuario con ese email y contraseña
+    const usuario = appState.usuariosRegistrados.find(u =>
         u.email === email && u.password === password
     );
 
     if (usuario) {
+        // Guardar sesión activa
         appState.usuarioActual = usuario;
         actualizarInterfazUsuario();
         guardarEstado();
-        
+
         // Mensaje personalizado según el tipo de usuario
         let mensaje = `¡Bienvenido ${usuario.nombre}!`;
         if (usuario.tipoUsuario === 'mayor') {
@@ -60,13 +65,14 @@ function procesarLogin() {
                 mensaje += ' 📚 Torta gratis en tu cumpleaños.';
             }
         }
-        
+
         mostrarNotificacion(mensaje);
-        navegarA('home');
+        navegarA('home'); // Redirige al home
     } else {
+        // Error de credenciales
         mostrarNotificacion('Email o contraseña incorrectos', 'error');
-        
-        // Limpiar campos
+
+        // Limpia solo el campo contraseña
         document.getElementById('login-password').value = '';
     }
 }
@@ -77,14 +83,16 @@ function procesarLogin() {
 
 function procesarRegistro() {
     const form = document.getElementById('registro-form');
-    
-    // Limpiar errores previos
+
+    // Limpia mensajes de error previos
     limpiarErrores(form);
-    
+
+    // Si falla la validación general, no continúa
     if (!validarFormulario(form)) {
         return;
     }
 
+    // Obtener valores del formulario
     const email = document.getElementById('registro-email')?.value;
     const password = document.getElementById('registro-password')?.value;
     const confirmPassword = document.getElementById('registro-confirm-password')?.value;
@@ -102,7 +110,7 @@ function procesarRegistro() {
         return;
     }
 
-    // Verificar si el usuario ya existe
+    // Verifica que no exista otro usuario con el mismo email
     if (appState.usuariosRegistrados.find(u => u.email === email)) {
         mostrarNotificacion('Este email ya está registrado', 'error');
         return;
@@ -114,25 +122,28 @@ function procesarRegistro() {
         password,
         nombre,
         fechaNacimiento,
-        tipoUsuario: determinarTipoUsuario(email)
+        tipoUsuario: determinarTipoUsuario(email) // Por defecto asigna tipo según reglas
     };
 
+    // Guardar en el estado global
     appState.usuariosRegistrados.push(nuevoUsuario);
     appState.usuarioActual = nuevoUsuario;
-    
+
     actualizarInterfazUsuario();
     guardarEstado();
-    
+
+    // Mensaje de éxito
     let mensaje = `¡Registro exitoso! Bienvenido ${nombre}`;
-    
-    // Informar sobre beneficios
+
+    // Informar beneficios según el tipo de usuario
     if (nuevoUsuario.tipoUsuario === 'estudiante_duoc') {
         mensaje += ' 📚 Como estudiante Duoc, tendrás torta gratis en tu cumpleaños.';
     } else if (calcularEdad(fechaNacimiento) >= 60) {
-        nuevoUsuario.tipoUsuario = 'mayor'; // Actualizar tipo
+        // Si el usuario es mayor de 60 años, actualiza el tipo
+        nuevoUsuario.tipoUsuario = 'mayor';
         mensaje += ' 🎉 Como adulto mayor, tienes 50% de descuento en todos los productos.';
     }
-    
+
     mostrarNotificacion(mensaje);
     navegarA('home');
 }
@@ -142,6 +153,7 @@ function procesarRegistro() {
 // ===============================
 
 function cerrarSesion() {
+    // Confirmación antes de cerrar sesión
     if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
         appState.usuarioActual = null;
         actualizarInterfazUsuario();
@@ -154,7 +166,7 @@ function cerrarSesion() {
 function actualizarInterfazUsuario() {
     const userInfo = document.querySelector('.user-info');
     const navActions = document.querySelector('.nav-actions');
-    
+
     if (!navActions) return;
 
     if (appState.usuarioActual) {
@@ -162,13 +174,15 @@ function actualizarInterfazUsuario() {
         if (userInfo) {
             const usuario = appState.usuarioActual;
             let iconoUsuario = '👤';
-            
+
+            // Iconos personalizados por tipo de usuario
             if (usuario.tipoUsuario === 'mayor') {
                 iconoUsuario = '👴';
             } else if (usuario.tipoUsuario === 'estudiante_duoc') {
                 iconoUsuario = '📚';
             }
-            
+
+            // Renderiza el mensaje y botón de logout
             userInfo.innerHTML = `
                 <span class="user-welcome">
                     ${iconoUsuario} Hola, ${usuario.nombre}
@@ -180,7 +194,7 @@ function actualizarInterfazUsuario() {
             userInfo.style.display = 'flex';
         }
 
-        // Ocultar enlaces de login/registro
+        // Oculta enlaces de login/registro
         document.querySelectorAll('[data-section="login"], [data-section="registro"]').forEach(link => {
             link.style.display = 'none';
         });
@@ -190,7 +204,7 @@ function actualizarInterfazUsuario() {
             userInfo.style.display = 'none';
         }
 
-        // Mostrar enlaces de login/registro
+        // Muestra enlaces de login/registro
         document.querySelectorAll('[data-section="login"], [data-section="registro"]').forEach(link => {
             link.style.display = 'block';
         });
@@ -207,11 +221,11 @@ function obtenerTipoUsuarioDescripcion(tipoUsuario) {
         'estudiante_duoc': 'Estudiante Duoc - Torta gratis en cumpleaños',
         'regular': 'Usuario Regular'
     };
-    
+
     return descripciones[tipoUsuario] || 'Usuario Regular';
 }
 
 function validarEdadMinima(fechaNacimiento) {
     const edad = calcularEdad(fechaNacimiento);
-    return edad >= 13; // Edad mínima para registro
+    return edad >= 13; // Edad mínima de registro permitida
 }

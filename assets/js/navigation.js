@@ -7,26 +7,28 @@
 // INICIALIZACIÓN DE NAVEGACIÓN
 // ===============================
 
+// Inicializa el sistema de navegación SPA: enlaces, historial y menú móvil
 function inicializarNavegacion() {
     console.log('🚀 Inicializando sistema de navegación...');
-    
-    // Configurar todos los elementos de navegación
+
+    // Configura todos los enlaces del menú y secciones
     configurarEnlacesNavegacion();
-    
-    // Navegación con historial del navegador
+
+    // Habilita la navegación usando el historial del navegador (atrás/adelante)
     window.addEventListener('popstate', (e) => {
         const seccion = e.state?.seccion || 'home';
-        navegarA(seccion, false);
+        navegarA(seccion, false); // Navega sin agregar al historial
     });
-    
-    // Configurar menú móvil
+
+    // Configura el funcionamiento del menú móvil
     configurarMenuMovil();
-    
+
     console.log('✅ Sistema de navegación inicializado');
 }
 
+// Configura los listeners para los enlaces del menú y los botones de navegación
 function configurarEnlacesNavegacion() {
-    // Configurar enlaces principales del menú
+    // Define los selectores de cada sección principal
     const enlaces = [
         { selector: '[data-section="home"]', seccion: 'home' },
         { selector: '[data-section="productos"]', seccion: 'productos' },
@@ -37,18 +39,19 @@ function configurarEnlacesNavegacion() {
         { selector: '[data-section="blog"]', seccion: 'blog' }
     ];
 
+    // Para cada enlace, agrega el evento click para navegar a la sección indicada
     enlaces.forEach(({ selector, seccion }) => {
         document.querySelectorAll(selector).forEach(elemento => {
             elemento.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 console.log(`🔄 Navegando a: ${seccion}`);
-                navegarA(seccion);
+                navegarA(seccion); // Llama a la función principal de navegación
             });
         });
     });
 
-    // Configurar botón del carrito específicamente
+    // Botón específico del carrito, si existe (acceso rápido)
     const cartBtn = document.getElementById('cart-btn');
     if (cartBtn) {
         cartBtn.addEventListener('click', (e) => {
@@ -62,26 +65,27 @@ function configurarEnlacesNavegacion() {
     console.log('🔗 Enlaces de navegación configurados');
 }
 
+// Navega a la sección especificada y actualiza la interfaz y el historial
 function navegarA(seccion, pushState = true) {
     console.log(`🎯 Navegando a sección: ${seccion}`);
-    
-    // Validar que la sección existe
+
+    // Verifica que el elemento de la sección exista en el DOM
     const seccionEl = document.getElementById(seccion);
     if (!seccionEl) {
         console.error(`❌ Sección no encontrada: ${seccion}`);
         return;
     }
 
-    // Ocultar todas las secciones
+    // Oculta todas las secciones
     document.querySelectorAll('.section').forEach(sec => {
         sec.classList.remove('active');
     });
 
-    // Mostrar sección solicitada
+    // Muestra únicamente la sección pedida
     seccionEl.classList.add('active');
     appState.seccionActual = seccion;
 
-    // Actualizar navegación activa
+    // Actualiza el enlace activo en el menú
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('data-section') === seccion) {
@@ -89,18 +93,18 @@ function navegarA(seccion, pushState = true) {
         }
     });
 
-    // Agregar al historial si es necesario
+    // Si corresponde, agrega la navegación al historial del navegador
     if (pushState) {
         history.pushState({ seccion }, '', `#${seccion}`);
     }
 
-    // Cerrar menú móvil si está abierto
+    // Cierra el menú móvil si estaba abierto
     const navMenu = document.getElementById('nav-menu');
     if (navMenu) {
         navMenu.classList.remove('active');
     }
 
-    // Ejecutar lógica específica de la sección
+    // Ejecuta la lógica asociada a cada sección (cargar datos, vistas, etc)
     setTimeout(() => {
         ejecutarLogicaSeccion(seccion);
     }, 50);
@@ -108,6 +112,7 @@ function navegarA(seccion, pushState = true) {
     console.log(`✅ Navegación completada a: ${seccion}`);
 }
 
+// Ejecuta la lógica especial al entrar en cada sección
 function ejecutarLogicaSeccion(seccion) {
     switch (seccion) {
         case 'home':
@@ -131,16 +136,22 @@ function ejecutarLogicaSeccion(seccion) {
     }
 }
 
+// ===============================
+// MENU MÓVIL
+// ===============================
+
+// Configura la interacción del menú móvil (abrir/cerrar en dispositivos pequeños)
 function configurarMenuMovil() {
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.getElementById('nav-menu');
-    
+
     if (navToggle && navMenu) {
+        // Alterna la visibilidad del menú móvil al tocar el botón toggle
         navToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
         });
 
-        // Cerrar menú al hacer click fuera
+        // Cierra el menú al hacer click fuera de él
         document.addEventListener('click', (e) => {
             if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
                 navMenu.classList.remove('active');
