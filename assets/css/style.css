@@ -320,13 +320,12 @@ img {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    background-image: url("/assets/img/torta50anio.webp");
+    background-image: url("/assets/img/Logo50Aniversario.png");
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-
-    border-radius: 50%;
-    width: 600px;
+    border-radius:20%;
+    width: 500px;
     height: 500px;
     box-shadow: var(--shadow-media);
 }
@@ -335,7 +334,7 @@ img {
     font-family: var(--font-encabezados);
     font-size: 4rem;
     color: var(--color-chocolate);
-    line-height: 1;
+    line-height: 0.8;
 }
 
 .anniversary-text {
@@ -1328,16 +1327,16 @@ img {
     }
 
     .anniversary-badge {
-        width: 250px;
-        height: 550px;
+        width: 300px;
+        height: 300px;
     }
 
     .logo {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     .anniversary-number {
-        font-size: 3rem;
+        font-size: 2rem;
     }
     .cart-btn {
         width: 40px;
