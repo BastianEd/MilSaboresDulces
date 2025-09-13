@@ -1,7 +1,6 @@
 /* === VARIABLES PERSONALIZADAS PARA MIL SABORES === */
-/* Colores, fuentes, espaciados, sombras y transiciones para todo el branding */
 :root {
-    /* Paleta cromática exclusiva del diseño del sitio */
+    /* Colores especÃ­ficos del diseÃ±o */
     --color-crema-pastel: #FFF5E1;
     --color-rosa-suave: #FFC0CB;
     --color-chocolate: #8B4513;
@@ -13,11 +12,11 @@
     --color-verde-menta: #98E4D6;
     --color-salmon: #FFA07A;
 
-    /* Tipografía principal y para encabezados */
+    /* Fuentes */
     --font-principal: 'Lato', sans-serif;
     --font-encabezados: 'Pacifico', cursive;
 
-    /* Espaciados estándar para márgenes y rellenos */
+    /* Espaciado personalizado */
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 16px;
@@ -25,25 +24,23 @@
     --spacing-xl: 32px;
     --spacing-2xl: 48px;
 
-    /* Sombras decorativas para tarjetas y elementos */
+    /* Sombras personalizadas */
     --shadow-suave: 0 2px 8px rgba(139, 69, 19, 0.1);
     --shadow-media: 0 4px 16px rgba(139, 69, 19, 0.15);
     --shadow-fuerte: 0 8px 24px rgba(139, 69, 19, 0.2);
 
-    /* Transiciones globales para hover/animaciones */
+    /* Transiciones */
     --transicion-suave: all 0.3s ease;
     --transicion-rapida: all 0.2s ease;
 }
 
 /* === RESET Y ESTILOS BASE === */
-/* Normaliza márgenes, bordes y asegura herencia correcta */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilo general del cuerpo: fuente, fondo y color principal */
 body {
     font-family: var(--font-principal);
     background-color: var(--color-crema-pastel);
@@ -52,21 +49,18 @@ body {
     overflow-x: hidden;
 }
 
-/* Encabezados con fuente decorativa y márgenes consistentes */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-encabezados);
     font-weight: normal;
     margin-bottom: var(--spacing-md);
 }
 
-/* Enlaces sin subrayado por defecto y transición suave */
 a {
     text-decoration: none;
     color: inherit;
     transition: var(--transicion-suave);
 }
 
-/* Botones base: heredan fuente y efecto de transición */
 button {
     font-family: inherit;
     border: none;
@@ -74,7 +68,6 @@ button {
     transition: var(--transicion-suave);
 }
 
-/* Imágenes adaptativas y seguras en proporción/espacio */
 img {
     max-width: 100%;
     max-height: 90%;
@@ -82,15 +75,13 @@ img {
     height: auto;
 }
 
-/* Contenedor central para estructura de cada sección */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-md);
 }
 
-/* === HEADER Y NAVEGACIÓN === */
-/* Fondo degradado, sombra y fijación en el tope */
+/* === HEADER Y NAVEGACIÃ“N === */
 .header {
     background: linear-gradient(135deg, var(--color-rosa-suave) 0%, var(--color-crema-pastel) 100%);
     box-shadow: var(--shadow-media);
@@ -99,12 +90,10 @@ img {
     z-index: 1000;
 }
 
-/* Barra de navegación con espacios */
 .navbar {
     padding: var(--spacing-md) 0;
 }
 
-/* Estructura flexible del navbar, para orientación y responsividad */
 .navbar .container {
     display: flex;
     justify-content: space-between;
@@ -112,14 +101,12 @@ img {
     flex-wrap: wrap;
 }
 
-/* Brand con logo y subtítulo */
 .nav-brand {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-/* Logo principal: fuente, tamaño y sombra sutil */
 .logo {
     font-family: var(--font-encabezados);
     font-size: 2.5rem;
@@ -128,7 +115,6 @@ img {
     margin-bottom: 0;
 }
 
-/* Tagline debajo del logo */
 .tagline {
     font-size: 0.9rem;
     color: var(--color-marron-oscuro);
@@ -136,7 +122,6 @@ img {
     margin-top: -5px;
 }
 
-/* Menú de navegación y enlaces, con espacio entre elementos */
 .nav-menu {
     display: flex;
     list-style: none;
@@ -144,7 +129,6 @@ img {
     margin: 0;
 }
 
-/* Enlaces con hover y estado activo customizado */
 .nav-link {
     font-weight: 500;
     color: var(--color-marron-oscuro);
@@ -161,14 +145,12 @@ img {
     transform: translateY(-2px);
 }
 
-/* Acciones del usuario y carrito agrupadas */
 .nav-actions {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
 }
 
-/* Información del usuario logueado */
 .user-info {
     display: flex;
     align-items: center;
@@ -178,7 +160,6 @@ img {
     border-radius: 25px;
 }
 
-/* Botón de cerrar sesión en el menú */
 .btn-logout {
     background: var(--color-chocolate);
     color: white;
@@ -191,7 +172,6 @@ img {
     background: var(--color-chocolate-hover);
 }
 
-/* Botón flotante del carrito con contador */
 .cart-btn {
     position: relative;
     background: var(--color-chocolate);
@@ -207,7 +187,6 @@ img {
     transform: scale(1.1);
 }
 
-/* Indicador numérico del carrito como "burbuja" */
 .cart-count {
     position: absolute;
     top: -8px;
@@ -224,8 +203,7 @@ img {
     font-weight: bold;
 }
 
-/* === MENU HAMBURGUESA PARA MÓVIL === */
-/* Estilo base para toggle de menú responsivo */
+/* Menu hamburguesa para movil */
 .nav-toggle {
     display: none;
     flex-direction: column;
@@ -249,17 +227,14 @@ img {
 }
 
 /* === SECCIONES PRINCIPALES === */
-/* Oculta sección por defecto, muestra solo la activa */
 .section {
     display: none;
-    padding: var(--spacing-2xl) 0;
 }
 
 .section.active {
     display: block;
 }
 
-/* Títulos: centrados y con tipografía decorativa/color especial */
 .section-title {
     font-family: var(--font-encabezados);
     font-size: 2.8rem;
@@ -277,7 +252,6 @@ img {
 }
 
 /* === HERO SECTION === */
-/* Banner principal con fondo degradado y badge de aniversario */
 .hero {
     background: linear-gradient(135deg, var(--color-rosa-suave) 0%, var(--color-crema-pastel) 100%);
     padding: var(--spacing-2xl) 0;
@@ -306,7 +280,6 @@ img {
     font-style: italic;
 }
 
-/* Lista de características del negocio en la hero */
 .hero-features {
     display: flex;
     flex-direction: column;
@@ -328,23 +301,19 @@ img {
     color: var(--color-dorado);
 }
 
-/* Botón principal de la hero */
 .hero-btn {
     padding: var(--spacing-md) var(--spacing-xl);
     font-size: 1.2rem;
     border-radius: 30px;
 }
 
-/* Imagen decorativa de la hero (ej. badge de aniversario) */
 .hero-image {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 300px;
-    background: radial-gradient(circle, var(--color-dorado) 0%, var(--color-rosa-suave) 100%);
-    border-radius: 50%;
-    box-shadow: var(--shadow-fuerte);
+
 }
 
 .anniversary-badge {
@@ -352,10 +321,13 @@ img {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: white;
+    background-image: url("/assets/img/torta50anio.webp");
+    background-repeat: no-repeat;
+    background-position: center;
+
     border-radius: 50%;
-    width: 200px;
-    height: 200px;
+    width: 600px;
+    height: 500px;
     box-shadow: var(--shadow-media);
 }
 
@@ -373,13 +345,11 @@ img {
 }
 
 /* === PRODUCTOS === */
-/* Grilla de productos destacados y catálogo general */
 .featured-products,
 .products-section {
     margin-bottom: var(--spacing-2xl);
 }
 
-/* Barra de filtros, busca y acciones para productos */
 .filters {
     display: flex;
     flex-wrap: wrap;
@@ -388,7 +358,7 @@ img {
     margin-bottom: var(--spacing-xl);
 }
 
-/* Controles juntos sobre catálogo (filtros + búsqueda) */
+/* Contenedor para controles de productos (bÃºsqueda + filtros) */
 .product-controls {
     display: flex;
     flex-wrap: wrap;
@@ -397,7 +367,7 @@ img {
     margin-bottom: var(--spacing-md);
 }
 
-/* Input de búsqueda de productos */
+/* Input de busqueda de productos */
 .product-search {
     flex: 1 1 200px;
     padding: var(--spacing-sm) var(--spacing-md);
@@ -415,7 +385,6 @@ img {
     box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.2);
 }
 
-/* Botones para filtrar por categoría */
 .filter-btn,
 .category-btn {
     background: white;
@@ -437,14 +406,13 @@ img {
     transform: translateY(-2px);
 }
 
-/* Grilla responsiva de productos */
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--spacing-xl);
+    padding-bottom: 2rem;
 }
 
-/* Tarjeta de producto individual con hover, imagen y acciones */
 .product-card {
     background: white;
     border-radius: 20px;
@@ -459,7 +427,6 @@ img {
     box-shadow: var(--shadow-fuerte);
 }
 
-/* Envoltorio de imagen y etiqueta de categoría */
 .product-image {
     height: 200px;
     background: var(--color-rosa-suave);
@@ -470,7 +437,8 @@ img {
     overflow: hidden;
 }
 
-/* Etiqueta de categoría en la esquina superior derecha */
+
+
 .product-category {
     position: absolute;
     top: var(--spacing-sm);
@@ -508,7 +476,6 @@ img {
     margin-bottom: var(--spacing-md);
 }
 
-/* Botones para agregar/ver producto */
 .product-actions {
     display: flex;
     gap: var(--spacing-sm);
@@ -540,10 +507,6 @@ img {
     align-items: center;
     justify-content: center;
 }
-
-/* (El resto del CSS continúa con bloques igualmente comentados para: formularios, botones secundarios, carrito, contacto, blog, empresa, footer, modales, notificaciones, utilidades, responsive design, animaciones, accesibilidad y estilos de impresión) */
-
-
 
 /* === FORMULARIOS === */
 .form-container {
