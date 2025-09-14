@@ -30,28 +30,39 @@ let appState = {
 // Código que se ejecuta cuando la página carga por completo
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Iniciando Pastelería Mil Sabores...');
-    console.log('📦 Versión Modularizada - Todos los módulos cargados');
+    console.log('📦 Versión Modularizada - Cargando módulos...');
 
     try {
-        verificarModulos();          // Revisa que todos los módulos estén definidos
-        cargarEstado();              // Carga estado desde localStorage
-        inicializarNavegacion();     // Configura navegación tipo SPA (sin recargar página)
-        actualizarInterfazUsuario(); // Actualiza la interfaz según usuario
-        actualizarContadorCarrito(); // Actualiza el ícono con el número de productos
-        configurarNotificaciones();  // Habilita sistema de notificaciones
-        configurarManejoErrores();   // Manejo de errores globales
+        // Pequeño delay para asegurar que todos los scripts se han cargado
+        setTimeout(() => {
+            // Verificar módulos (sin detener la app si faltan algunos)
+            const modulosOK = verificarModulos();
 
-        // Detecta la sección inicial desde la URL (#hash)
-        const seccionInicial = window.location.hash.slice(1) || 'home';
-        navegarA(seccionInicial, false);
+            // Continuar con la inicialización independientemente del resultado
+            cargarEstado();              // Carga estado desde localStorage
+            inicializarNavegacion();     // Configura navegación tipo SPA
+            actualizarInterfazUsuario(); // Actualiza la interfaz según usuario
+            actualizarContadorCarrito(); // Actualiza el ícono con el número de productos
+            configurarNotificaciones();  // Habilita sistema de notificaciones
+            configurarManejoErrores();   // Manejo de errores globales
 
-        console.log('✅ Aplicación inicializada correctamente');
-        console.log('🎉 ¡Bienvenido a Pastelería Mil Sabores!');
+            // Detecta la sección inicial desde la URL (#hash)
+            const seccionInicial = window.location.hash.slice(1) || 'home';
+            navegarA(seccionInicial, false);
 
-        mostrarInfoDesarrollo();     // Activa herramientas de debug en desarrollo
+            console.log('✅ Aplicación inicializada correctamente');
+            console.log('🎉 ¡Bienvenido a Pastelería Mil Sabores!');
+
+            // Solo mostrar info de desarrollo si todo está bien
+            if (modulosOK) {
+                mostrarInfoDesarrollo();
+            }
+
+        }, 100); // Delay de 100ms para asegurar carga completa
+
     } catch (error) {
         console.error('❌ Error crítico al inicializar la aplicación:', error);
-        mostrarErrorCritico(error); // Muestra pantalla de error si algo falla
+        mostrarErrorCritico(error);
     }
 });
 
@@ -60,54 +71,77 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===============================
 // Confirma que todos los módulos importantes (productos, login, carrito, etc.) existan
 function verificarModulos() {
+    console.log('🔍 Iniciando verificación de módulos...');
+
     const modulosRequeridos = [
         // Datos
-        { nombre: 'PRODUCTOS', descripcion: 'Catálogo de productos' },
-        { nombre: 'USUARIOS_DEMO', descripcion: 'Usuarios de demostración' },
+        { nombre: 'PRODUCTOS', descripcion: 'Catálogo de productos', tipo: 'variable' },
+        { nombre: 'USUARIOS_DEMO', descripcion: 'Usuarios de demostración', tipo: 'variable' },
 
         // Utilidades
-        { nombre: 'formatearPrecio', descripcion: 'Formateo de precios' },
-        { nombre: 'mostrarNotificacion', descripcion: 'Sistema de notificaciones' },
+        { nombre: 'formatearPrecio', descripcion: 'Formateo de precios', tipo: 'funcion' },
+        { nombre: 'mostrarNotificacion', descripcion: 'Sistema de notificaciones', tipo: 'funcion' },
 
         // Navegación
-        { nombre: 'inicializarNavegacion', descripcion: 'Sistema de navegación SPA' },
-        { nombre: 'navegarA', descripcion: 'Navegación entre secciones' },
+        { nombre: 'inicializarNavegacion', descripcion: 'Sistema de navegación SPA', tipo: 'funcion' },
+        { nombre: 'navegarA', descripcion: 'Navegación entre secciones', tipo: 'funcion' },
 
         // Productos
-        { nombre: 'cargarProductos', descripcion: 'Sistema de productos' },
-        { nombre: 'crearTarjetaProducto', descripcion: 'Renderizado de productos' },
+        { nombre: 'cargarProductos', descripcion: 'Sistema de productos', tipo: 'funcion' },
+        { nombre: 'crearTarjetaProducto', descripcion: 'Renderizado de productos', tipo: 'funcion' },
 
         // Carrito
-        { nombre: 'agregarAlCarrito', descripcion: 'Gestión del carrito' },
-        { nombre: 'actualizarContadorCarrito', descripcion: 'Contador del carrito' },
+        { nombre: 'agregarAlCarrito', descripcion: 'Gestión del carrito', tipo: 'funcion' },
+        { nombre: 'actualizarContadorCarrito', descripcion: 'Contador del carrito', tipo: 'funcion' },
 
         // Autenticación
-        { nombre: 'procesarLogin', descripcion: 'Sistema de login' },
-        { nombre: 'actualizarInterfazUsuario', descripcion: 'Interfaz de usuario' },
+        { nombre: 'procesarLogin', descripcion: 'Sistema de login', tipo: 'funcion' },
+        { nombre: 'actualizarInterfazUsuario', descripcion: 'Interfaz de usuario', tipo: 'funcion' },
 
         // Blog
-        { nombre: 'cargarBlog', descripcion: 'Sistema de blog' }
+        { nombre: 'cargarBlog', descripcion: 'Sistema de blog', tipo: 'funcion' }
     ];
 
     const modulosFaltantes = [];
+    const modulosEncontrados = [];
 
     // Verifica si cada módulo existe en window
     modulosRequeridos.forEach(modulo => {
-        if (typeof window[modulo.nombre] === 'undefined') {
+        const existe = typeof window[modulo.nombre] !== 'undefined';
+
+        if (!existe) {
             modulosFaltantes.push(modulo);
+            console.warn(`❌ ${modulo.nombre}: ${modulo.descripcion} - NO ENCONTRADO`);
+        } else {
+            modulosEncontrados.push(modulo);
+            console.log(`✅ ${modulo.nombre}: ${modulo.descripcion} - OK`);
         }
     });
 
-    // Si falta alguno, avisa en consola y muestra notificación
+    // Reporte de resultados
+    console.log(`📊 Verificación completada:`);
+    console.log(`   ✅ Módulos cargados: ${modulosEncontrados.length}`);
+    console.log(`   ❌ Módulos faltantes: ${modulosFaltantes.length}`);
+
+    // Si faltan módulos críticos, muestra advertencia pero no detiene la app
     if (modulosFaltantes.length > 0) {
         console.warn('⚠️ Módulos faltantes detectados:');
         modulosFaltantes.forEach(modulo => {
             console.warn(`- ${modulo.nombre}: ${modulo.descripcion}`);
         });
 
-        mostrarNotificacion('Algunos módulos no se cargaron correctamente', 'warning');
+        // Solo muestra notificación si hay muchos módulos faltantes (indica problema serio)
+        if (modulosFaltantes.length > 5) {
+            mostrarNotificacion && mostrarNotificacion(
+                'Algunos módulos no se cargaron correctamente. Algunas funciones pueden no estar disponibles.',
+                'warning'
+            );
+        }
+
+        return false; // Indica que hay problemas
     } else {
         console.log('✅ Todos los módulos cargados correctamente');
+        return true; // Todo OK
     }
 }
 
@@ -218,6 +252,33 @@ function verificarSaludApp() {
     console.table(checks.map(c => ({ ...c, estado: c.check() })));
 }
 
+// ===============================
+// DIAGNÓSTICO DE CARGA DE SCRIPTS
+// ===============================
+function diagnosticarScripts() {
+    console.log('🔍 DIAGNÓSTICO DE SCRIPTS:');
+
+    const scripts = document.querySelectorAll('script[src]');
+    scripts.forEach((script, index) => {
+        console.log(`${index + 1}. ${script.src}`);
+        console.log(`   - Cargado: ${script.readyState || 'unknown'}`);
+    });
+
+    // Verificar que el orden sea correcto
+    const ordenEsperado = [
+        'data.js',
+        'utils.js',
+        'navigation.js',
+        'productos.js',
+        'carrito.js',
+        'auth.js',
+        'blog.js',
+        'app.js'
+    ];
+
+    console.log('📋 Orden de carga esperado:', ordenEsperado);
+}
+
 // Expone funciones útiles a nivel global para usarlas en consola
-window.mostrarInfoEmpresa = mostrarInfoEmpresa;
-window.verificarSaludApp = verificarSaludApp;
+// Exponer función de diagnóstico para debug
+window.diagnosticarScripts = diagnosticarScripts;

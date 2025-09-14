@@ -224,7 +224,7 @@ const USUARIOS_DEMO = [
     {
         email: "mayor@gmail.com",
         password: "password123", // Contraseña ficticia de ejemplo
-        nombre: "Elena Rodríguez",
+        nombre: "Michael Rodríguez",
         fechaNacimiento: "1960-05-15",
         tipoUsuario: "mayor" // Segmento de usuario (ej: descuentos especiales)
     },
