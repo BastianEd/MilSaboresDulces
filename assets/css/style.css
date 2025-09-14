@@ -1173,6 +1173,9 @@ img {
     .nav-toggle {
         display: flex;
         z-index: 1001;
+        position: fixed; /* Para que se posicione respecto a la pantalla */
+        top: 20px;       /* Ajusta según convenga */
+        left: 20px;
     }
 
     /* Menú cuando está activo */
@@ -1188,10 +1191,21 @@ img {
         transform: rotate(-45deg) translate(5px, -5px);
     }
 
+    .navbar .container {
+        padding-left: 80px;
+        flex-wrap: wrap;
+    }
+
+    /* Ajusta el tamaño de logo para que no quede muy grande */
+    .nav-brand .logo {
+        font-size: 1.5rem;
+        white-space: nowrap; /* evitar que el texto haga wrap brusco */
+    }
+
     .nav-menu {
         position: fixed;
         top: 0;
-        right: -100%;
+        left: -100%;
         width: 70%;
         height: 100vh;
         background: white;
@@ -1199,13 +1213,14 @@ img {
         gap: 0;
         box-shadow: var(--shadow-media);
         padding: 80px 20px 20px;
-        transition: right 0.3s ease;
+        transition: left 0.3s ease;
         z-index: 999;
         overflow-y: auto;
     }
 
     .nav-menu.active {
-        right: 0;
+        left: 0;
+        right: auto;
     }
 
     .nav-link {
@@ -1215,9 +1230,16 @@ img {
         text-align: center;
         border: 1px solid var(--color-rosa-suave);
     }
-
-    .navbar .container {
-        flex-wrap: nowrap;
+    .nav-link {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        border-radius: 10px;
+        padding: 0;
     }
 
     .logo {
@@ -1226,10 +1248,6 @@ img {
 
     .tagline {
         font-size: 0.7rem;
-    }
-
-    .navbar .container {
-        flex-wrap: wrap;
     }
 
     .hero-content {
